@@ -5,19 +5,14 @@
 int main() {
     std::tm local_t;
     std::cout << "\nInput time MM:SS : ";
-    std::cin >> std::get_time(&local_t, "%M:%S");
-    std::time_t s = std::time(nullptr);
-    std::tm* local_s = std::localtime(&s);    
+    std::cin >> std::get_time(&local_t, "%M:%S");  
     while (local_t.tm_sec != 0 || local_t.tm_min > 0) {              
-        int temp_time = local_s->tm_sec;
-        do {                        
-            std::time_t s = std::time(nullptr);
-            std::tm* local_s = std::localtime(&s);
-        } while ((temp_time) == (local_s->tm_sec));
-        std::cout << std::put_time(&local_t, "%M:%S") << std::endl;        
-        local_t.tm_sec -= 1;
+        int temp_time = std::time(nullptr);        
+         local_t.tm_sec -= 1;
+        do {} while ((temp_time) == (std::time(nullptr)));
+        std::cout << std::put_time(&local_t, "%M:%S") << std::endl;       
         if (local_t.tm_sec <= 0 && local_t.tm_min != 0) {
-            local_t.tm_sec = 59;
+            local_t.tm_sec = 60;
             local_t.tm_min--;
         }  
     }
